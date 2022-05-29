@@ -239,7 +239,7 @@ nav h1 a {
   font-size: 14pt;
   font-weight: bold;
   letter-spacing: 10px;
-  margin: 0 0 20px;
+  margin: 0 auto 20px;
   padding: 2px 0;
   text-align: center;
   text-transform: uppercase;
@@ -290,6 +290,20 @@ nav h1 a {
 }
 
 /* ====================== Media Queries ====================== */
+@media screen and (min-width: 426px){
+  .inside #map-container {
+    margin-top: 95px;
+  }
+}
+
+@media screen and (min-width: 480px){
+  #restaurant-img, #restaurant-cuisine {
+    width: 50%;
+  }
+  #reviews-list {
+    width: 60%;
+  }
+}
 
 @media screen and (min-width: 768px){
   #restaurants-list li {
