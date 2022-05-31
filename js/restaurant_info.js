@@ -1,13 +1,20 @@
 let restaurant;
-var newMap;
+var map, newMap;
 
-/**
- * Initialize map as soon as the page is loaded.
- */
+
 document.addEventListener('DOMContentLoaded', (event) => {
-  initMap();
+  callServiceWorker();
 });
 
+/* Register service worker */
+function callServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+      .register('/sw.js')
+      .then(() => console.log('Service Worker Registered'))
+      .catch((err) => console.log('Service Worker Error: ', err));
+  }
+}
 /**
  * Initialize leaflet map
  */
@@ -35,6 +42,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 //   });
 // }
 
+/**
+ * Initialize map as soon as the page is loaded.
+ */
 window.initMap = () => {
   fetchRestaurantFromURL((error, restaurant) => {
     if (error) { // Got an error!
@@ -82,11 +92,9 @@ fetchRestaurantFromURL = (callback) => {
 fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
-  name.tabIndex = 0;
 
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
-  address.tabIndex = 0;
 
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
@@ -95,7 +103,6 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
-  cuisine.tabIndex = 0;
 
   // fill operating hours
   if (restaurant.operating_hours) {
